@@ -70,7 +70,7 @@ function AddToCart({ id }) {
             },
           }}
         >
-        {quantity[id] || 0}
+        {quantity[id] || 1}
         </Button>
       )}
     </Box>

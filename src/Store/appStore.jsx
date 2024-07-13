@@ -1,9 +1,10 @@
 import { create } from 'zustand'
+import ProductList from '../Components/ProductList'
 
 const appStore = create((set) => ({
   cartItem: 0,
   quantity: {},
-  added: true,
+  added: {},
   increase: (id) =>
     set((state) => ({
       quantity: {
@@ -11,6 +12,7 @@ const appStore = create((set) => ({
         [id]: (state.quantity[id] || 0) + 1,
       },
     })),
+
   decrease: (id) =>
     set((state) => ({
       quantity: {
@@ -19,8 +21,10 @@ const appStore = create((set) => ({
       },
     })),
 
-//cart
+  //cart
   cart: [],
+
+  order:[],
 
   //showing items in cart
   showItems: true,
@@ -33,18 +37,30 @@ const appStore = create((set) => ({
       showItems: false,
       cart: [...state.cart, id],
     })),
-  
+
   //remove from cart
   removeFromCart: (id) =>
     set((state) => {
       const updatedCart = state.cart.filter((itemId) => itemId !== id)
       return {
         cartItem: state.cartItem > 0 ? state.cartItem - 1 : 0,
-        added: { ...state.added, [id]: false }, // Set 'added' to false
+        added: { ...state.added, [id]: false },
         cart: updatedCart,
         showItems: updatedCart.length === 0,
       }
     }),
+
+open: false,
+
+  openDialog: () =>
+    set((state) => ({
+      open: true,
+    })),
+
+  closeDialog: () =>
+    set((state) => ({
+      open: false,
+    })),
 }))
 
 export default appStore

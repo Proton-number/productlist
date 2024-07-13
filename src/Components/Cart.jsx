@@ -12,12 +12,29 @@ import appStore from '../Store/appStore'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import logo from '/src/images/icon-carbon-neutral.svg'
 import ProductList from './ProductList'
+import Order from './Order'
 
 function Cart() {
-  const { cartItem, showItems, quantity, cart, removeFromCart } = appStore()
+  const {
+    cartItem,
+    showItems,
+    quantity,
+    cart,
+    removeFromCart,
+    openDialog,
+    closeDialog,
+  } = appStore()
+
+  const totalOrder = cart.reduce((total, cartItemId) => {
+    const product = ProductList.find((product) => product.id === cartItemId)
+    const priceNumber = product ? parseFloat(product.price.replace('$', '')) : 0
+    const totalPrice = (quantity[cartItemId] || 0) * priceNumber
+    return total + totalPrice
+  }, 0)
 
   return (
-    <Stack>
+    <>
+       <Stack>
       <Paper
         elevation={2}
         sx={{
@@ -44,7 +61,9 @@ function Cart() {
                 height: '200px',
               }}
             >
-              <Box component="img" src={emptyCart} alt="empty cart" />
+              <>
+                <Box component="img" src={emptyCart} alt="empty cart" />
+              </>
               <Typography
                 variant="body1"
                 sx={{ color: 'hsl(10, 24%, 45%)', fontWeight: 'bold' }}
@@ -61,9 +80,8 @@ function Cart() {
                 const priceNumber = product
                   ? parseFloat(product.price.replace('$', ''))
                   : 0
-                  const grandTotal = 0;
-                const totalPrice = (quantity[cartItems] || 0) * priceNumber;
-                grandTotal += totalPrice;
+                const totalPrice = (quantity[cartItems] || 1) * priceNumber
+
                 return (
                   <React.Fragment key={index}>
                     <Stack
@@ -78,7 +96,15 @@ function Cart() {
                           {product ? product.description : 'Unknown Product'}
                         </Typography>
                         <Stack direction="row" spacing={2}>
-                          <Typography> {quantity[cartItems] || 0}</Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: 'bold',
+                              color: 'hsl(12, 100%, 43%)',
+                            }}
+                          >
+                            {' '}
+                            {quantity[cartItems] || 1}x
+                          </Typography>
                           <Typography>
                             @ ${priceNumber.toFixed(2)} ${totalPrice.toFixed(2)}
                           </Typography>
@@ -102,8 +128,9 @@ function Cart() {
                 }}
               >
                 <Typography sx={{ fontWeight: 'bold' }}>Order Total</Typography>
+
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                $3.79
+                  ${totalOrder.toFixed(2)}
                 </Typography>
               </Stack>
               <Stack
@@ -116,13 +143,16 @@ function Cart() {
                   alignItems: 'center',
                 }}
               >
-                <Box component="img" src={logo} />
+                <>
+                  <Box component="img" src={logo} />
+                </>
                 <Typography>
                   This is a <b>carbon-neutral</b> delivery
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: 'center' }}>
                 <Button
+                  onClick={openDialog}
                   variant="contained"
                   sx={{
                     textTransform: 'none',
@@ -145,7 +175,9 @@ function Cart() {
           )}
         </Stack>
       </Paper>
-    </Stack>
+      </Stack>
+      <Order totalOrder={totalOrder} />
+    </>
   )
 }
 
