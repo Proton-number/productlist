@@ -7,9 +7,12 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 function AddToCart({ id }) {
   const { added, increase, decrease, quantity, addCart } = appStore()
+
+  // Check if the product with this ID is added
+  const isAdded = added[id] || false
   return (
     <Box sx={{ marginLeft: '15%', marginTop: '4px' }}>
-      {added ? (
+      {!isAdded ? (
         <Button
           onClick={() => addCart(id)}
           startIcon={
@@ -67,7 +70,7 @@ function AddToCart({ id }) {
             },
           }}
         >
-          {quantity}
+        {quantity[id] || 0}
         </Button>
       )}
     </Box>

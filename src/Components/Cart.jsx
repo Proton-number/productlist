@@ -13,7 +13,6 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import logo from '/src/images/icon-carbon-neutral.svg'
 import ProductList from './ProductList'
 
-
 function Cart() {
   const { cartItem, showItems, quantity, cart, removeFromCart } = appStore()
 
@@ -55,45 +54,58 @@ function Cart() {
             </Stack>
           ) : (
             <>
-              {cart.map((cartItems, index) => (
-                <React.Fragment key={index}>
-                  <Stack
-                    direction="row"
-                    sx={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Stack>
-                      <Typography sx={{ fontWeight: 'bold' }}>
-                        Classic
-                      </Typography>
-                      <Stack direction="row" spacing={2}>
-                        <Typography>{quantity}x</Typography>
-                        <Typography>@ $5.00 $5.00</Typography>
-                      </Stack>
-                    </Stack>
-                    <IconButton
-                      sx={{ color: 'black' }}
-                      onClick={removeFromCart}
+              {cart.map((cartItems, index) => {
+                const product = ProductList.find(
+                  (product) => product.id === cartItems,
+                )
+                const priceNumber = product
+                  ? parseFloat(product.price.replace('$', ''))
+                  : 0
+                  const grandTotal = 0;
+                const totalPrice = (quantity[cartItems] || 0) * priceNumber;
+                grandTotal += totalPrice;
+                return (
+                  <React.Fragment key={index}>
+                    <Stack
+                      direction="row"
+                      sx={{
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
                     >
-                      <HighlightOffIcon />
-                    </IconButton>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    sx={{
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Typography>Order Total</Typography>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      $5.00
-                    </Typography>
-                  </Stack>
-                </React.Fragment>
-              ))}
+                      <Stack>
+                        <Typography sx={{ fontWeight: 'bold' }}>
+                          {product ? product.description : 'Unknown Product'}
+                        </Typography>
+                        <Stack direction="row" spacing={2}>
+                          <Typography> {quantity[cartItems] || 0}</Typography>
+                          <Typography>
+                            @ ${priceNumber.toFixed(2)} ${totalPrice.toFixed(2)}
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                      <IconButton
+                        sx={{ color: 'black' }}
+                        onClick={() => removeFromCart(cartItems)}
+                      >
+                        <HighlightOffIcon />
+                      </IconButton>
+                    </Stack>
+                  </React.Fragment>
+                )
+              })}
+              <Stack
+                direction="row"
+                sx={{
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold' }}>Order Total</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                $3.79
+                </Typography>
+              </Stack>
               <Stack
                 direction="row"
                 spacing={1}
