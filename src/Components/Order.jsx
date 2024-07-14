@@ -14,9 +14,8 @@ import {
 import ProductList from './ProductList'
 import tick from '/src/images/icon-order-confirmed.svg'
 import appStore from '../Store/appStore'
-
-function Order({ totalOrder }) {
-  const { closeDialog, open, order } = appStore()
+function Order({ totalOrder, quantity }) {
+  const { closeDialog, open, cart } = appStore()
   return (
     <>
       <Dialog open={open} onClose={closeDialog}>
@@ -43,31 +42,64 @@ function Order({ totalOrder }) {
               padding: '10px',
             }}
           >
-            <Stack
-              direction="row"
-              sx={{
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Stack spacing={1}>
-                <>
-                  <Box />
-                </>
-                <Stack>
-                  <Typography>Classic</Typography>
+            {cart.map((itemId, index) => {
+              const product = ProductList.find(
+                (product) => product.id === itemId,
+              )
+              const priceNumber = product
+                ? parseFloat(product.price.replace('$', ''))
+                : 0
+              const itemQuantity = quantity[itemId] || 1
+              const totalPrice = itemQuantity * priceNumber
+              return (
+                <React.Fragment key={index}>
                   <Stack
-                    spacing={1}
+                    spacing={2}
                     direction="row"
-                    sx={{ alignItems: 'center' }}
+                    sx={{
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginBottom: '8px',
+                    }}
                   >
-                    <Typography sx={{ fontWeight: 'bold' }}>1x</Typography>
-                    <Typography sx={{ fontWeight: 'bold' }}>@ 5.34</Typography>
+                    <Stack direction="row" spacing={2}>
+                      <React.Fragment>
+                        <Box
+                          component="img"
+                          src={product.thumbnail}
+                          sx={{ width: '80px' }}
+                        />
+                      </React.Fragment>
+                      <Stack>
+                        <Typography sx={{ fontWeight: 'bold' }}>
+                          {product.description}
+                        </Typography>
+                        <Stack
+                          spacing={1}
+                          direction="row"
+                          sx={{ alignItems: 'center' }}
+                        >
+                          <Typography
+                            sx={{
+                              fontWeight: 'bold',
+                              color: 'hsl(12, 100%, 43%)',
+                            }}
+                          >
+                            {itemQuantity}x
+                          </Typography>
+                          <Typography sx={{ fontWeight: 'bold' }}>
+                            @ {priceNumber.toFixed(2)}
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      ${totalPrice.toFixed(2)}
+                    </Typography>
                   </Stack>
-                </Stack>
-              </Stack>
-          <Typography sx={{ fontWeight: 'bold' }}>$4.29</Typography>
-            </Stack>
+                </React.Fragment>
+              )
+            })}
             <Stack
               direction="row"
               sx={{

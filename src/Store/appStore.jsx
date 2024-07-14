@@ -24,7 +24,7 @@ const appStore = create((set) => ({
   //cart
   cart: [],
 
-  order:[],
+  order: [],
 
   //showing items in cart
   showItems: true,
@@ -42,15 +42,19 @@ const appStore = create((set) => ({
   removeFromCart: (id) =>
     set((state) => {
       const updatedCart = state.cart.filter((itemId) => itemId !== id)
+      const updatedQuantity = { ...state.quantity }
+      delete updatedQuantity[id]
       return {
         cartItem: state.cartItem > 0 ? state.cartItem - 1 : 0,
         added: { ...state.added, [id]: false },
         cart: updatedCart,
         showItems: updatedCart.length === 0,
+        quantity: updatedQuantity,
       }
     }),
 
-open: false,
+  //For Dialog
+  open: false,
 
   openDialog: () =>
     set((state) => ({

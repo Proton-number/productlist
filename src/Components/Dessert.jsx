@@ -10,17 +10,23 @@ function Dessert() {
         Dessert
       </Typography>
 
-      <Grid container columns={{ xs: 6, sm: 8, lg: 10 }}>
+      <Grid container columns={{ xs: 4, sm: 12, lg: 10 }}>
         {ProductList.map((product) => {
           return (
             <Grid item xs={3} sm={4} lg={3} key={product.id}>
               <Stack sx={{ marginBottom: '20px' }}>
-                <Box
-                  component="img"
-                  src={product.img}
-                  alt={product.description}
-                  sx={{ width: '250px', height: '250px', borderRadius: '20px' }}
-                />
+                <React.Fragment>
+                  <Box
+                    component="img"
+                    src={product.img}
+                    alt={product.description}
+                    sx={{
+                      width: { xs: '330px', sm: '220px', lg: '250px' },
+                      height: { xs: '330px', sm: '220px', lg: '250px' },
+                      borderRadius: '20px',
+                    }}
+                  />
+                </React.Fragment>
                 <AddToCart id={product.id} />
                 <Typography
                   sx={{ fontWeight: 'bold', opacity: '50%' }}
