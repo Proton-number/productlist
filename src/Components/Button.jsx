@@ -10,9 +10,7 @@ function AddToCart({ id }) {
 
   const isAdded = added[id] || false
   return (
-    <Box
-      sx={{ marginLeft: { xs: '30%', sm: '10%', lg: '15%' }, marginTop: '4px' }}
-    >
+    <Box sx={{ marginTop: '4px' }}>
       {!isAdded ? (
         <Button
           onClick={() => addCart(id)}
@@ -26,8 +24,8 @@ function AddToCart({ id }) {
             textTransform: 'none',
             backgroundColor: 'white',
             color: 'black',
-            width: { xs: '200px', sm: '170px' },
-            height: { xs: '60px', sm: '50px' },
+            width: { xs: '160px', sm: '170px' },
+            height: { xs: '50px', sm: '50px' },
             '&:hover': {
               backgroundColor: 'white',
               color: ' hsl(12, 100%, 43%)',
@@ -57,8 +55,8 @@ function AddToCart({ id }) {
             textTransform: 'none',
             backgroundColor: ' hsl(12, 100%, 43%)',
             color: 'white',
-            width: { xs: '200px', sm: '170px' },
-            height: { xs: '60px', sm: '50px' },
+            width: { xs: '160px', sm: '170px' },
+            height: { xs: '50px', sm: '50px' },
             '& .MuiButton-startIcon': {
               marginRight: '40px',
             },

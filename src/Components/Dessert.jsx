@@ -5,16 +5,20 @@ import AddToCart from './Button'
 
 function Dessert() {
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} >
       <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
         Dessert
       </Typography>
 
-      <Grid container columns={{ xs: 5, sm: 12, lg: 10 }}>
+      <Grid
+        container
+        columns={{ xs: 3.8, sm: 12, lg: 10 }}
+        sx={{ justifyContent: 'center' }}
+      >
         {ProductList.map((product) => {
           return (
             <Grid item xs={3} sm={4} lg={3} key={product.id}>
-              <Stack sx={{ marginBottom: '20px' }}>
+              <Stack sx={{ marginBottom: '20px', alignItems:'center' }}>
                 <React.Fragment>
                   <Box
                     component="img"
@@ -24,7 +28,6 @@ function Dessert() {
                       width: { xs: '230px', sm: '220px', lg: '250px' },
                       height: { xs: '230px', sm: '220px', lg: '250px' },
                       borderRadius: '20px',
-                      
                     }}
                   />
                 </React.Fragment>

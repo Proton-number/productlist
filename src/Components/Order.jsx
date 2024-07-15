@@ -1,33 +1,22 @@
 import React from 'react'
-import {
-  Stack,
-  IconButton,
-  Typography,
-  Paper,
-  Box,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@mui/material'
+import { Stack, Typography, Box, Button, Dialog } from '@mui/material'
 import ProductList from './ProductList'
 import tick from '/src/images/icon-order-confirmed.svg'
 import appStore from '../Store/appStore'
 function Order({ totalOrder, quantity }) {
-  const { closeDialog, open, cart } = appStore()
+  const { closeDialog, open, cart, startNewOrder } = appStore()
   return (
     <>
       <Dialog open={open} onClose={closeDialog}>
-        <Stack spacing={1} sx={{ padding: '15px' }}>
-          <>
+        <Stack spacing={1} sx={{ padding: '15px', overflow: 'none' }}>
+          <React.Fragment>
             <Box
               component="img"
               src={tick}
               alt="order confirmed"
               sx={{ width: '30px' }}
             />
-          </>
+          </React.Fragment>
           <Typography sx={{ fontWeight: 'bold' }} variant="h4">
             Order Confirmed
           </Typography>
@@ -116,6 +105,7 @@ function Order({ totalOrder, quantity }) {
 
           <Stack sx={{ alignItems: 'center' }}>
             <Button
+              onClick={startNewOrder}
               variant="contained"
               sx={{
                 textTransform: 'none',

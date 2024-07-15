@@ -5,7 +5,11 @@ const appStore = create((set) => ({
   quantity: {},
   added: {},
 
-  
+  //cart
+  cart: [],
+
+  order: [],
+
   increase: (id) =>
     set((state) => ({
       quantity: {
@@ -21,11 +25,6 @@ const appStore = create((set) => ({
         [id]: Math.max(0, (state.quantity[id] || 0) - 1),
       },
     })),
-
-  //cart
-  cart: [],
-
-  order: [],
 
   //showing items in cart
   showItems: true,
@@ -64,6 +63,17 @@ const appStore = create((set) => ({
 
   closeDialog: () =>
     set((state) => ({
+      open: false,
+    })),
+
+  //start new order
+  startNewOrder: () =>
+    set((state) => ({
+      cartItem: 0,
+      quantity: {},
+      added: {},
+      cart: [],
+      showItems: true,
       open: false,
     })),
 }))

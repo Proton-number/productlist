@@ -13,16 +13,11 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import logo from '/src/images/icon-carbon-neutral.svg'
 import ProductList from './ProductList'
 import Order from './Order'
+import { motion, AnimatePresence } from 'framer-motion'
 
 function Cart() {
-  const {
-    cartItem,
-    showItems,
-    quantity,
-    cart,
-    removeFromCart,
-    openDialog,
-  } = appStore();
+  const { cartItem, showItems, quantity, cart, removeFromCart, openDialog } =
+    appStore()
 
   const totalOrder = cart.reduce((total, cartItemId) => {
     const product = ProductList.find((product) => product.id === cartItemId)
@@ -76,58 +71,69 @@ function Cart() {
               </Stack>
             ) : (
               <>
-                {cart.map((cartItems, index) => {
-                  const product = ProductList.find(
-                    (product) => product.id === cartItems,
-                  )
-                  const priceNumber = product
-                    ? parseFloat(product.price.replace('$', ''))
-                    : 0
-                  const totalPrice = (quantity[cartItems] || 1) * priceNumber
+                <AnimatePresence>
+                  {cart.map((cartItems, index) => {
+                    const product = ProductList.find(
+                      (product) => product.id === cartItems,
+                    )
+                    const priceNumber = product
+                      ? parseFloat(product.price.replace('$', ''))
+                      : 0
+                    const totalPrice = (quantity[cartItems] || 1) * priceNumber
 
-                  return (
-                    <React.Fragment key={index}>
-                      <Stack
-                        direction="row"
-                        sx={{
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Stack>
-                          <Typography sx={{ fontWeight: 'bold' }}>
-                            {product ? product.description : 'Unknown Product'}
-                          </Typography>
-                          <Stack direction="row" spacing={2}>
-                            <Typography
-                              sx={{
-                                fontWeight: 'bold',
-                                color: 'hsl(12, 100%, 43%)',
-                              }}
-                            >
-                              {' '}
-                              {quantity[cartItems] || 1}x
-                            </Typography>
-                            <Typography
-                              sx={{
-                                fontWeight: 'bold',
-                              }}
-                            >
-                              @ ${priceNumber.toFixed(2)} $
-                              {totalPrice.toFixed(2)}
-                            </Typography>
-                          </Stack>
-                        </Stack>
-                        <IconButton
-                          sx={{ color: 'black' }}
-                          onClick={() => removeFromCart(cartItems)}
+                    return (
+                      <React.Fragment key={index}>
+                        <Stack
+                          component={motion.div}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.5 }}
+                          spacing={2}
+                          direction="row"
+                          sx={{
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: '10px',
+                          }}
                         >
-                          <HighlightOffIcon />
-                        </IconButton>
-                      </Stack>
-                    </React.Fragment>
-                  )
-                })}
+                          <Stack>
+                            <Typography sx={{ fontWeight: 'bold' }}>
+                              {product
+                                ? product.description
+                                : 'Unknown Product'}
+                            </Typography>
+                            <Stack direction="row" spacing={2}>
+                              <Typography
+                                sx={{
+                                  fontWeight: 'bold',
+                                  color: 'hsl(12, 100%, 43%)',
+                                }}
+                              >
+                                {' '}
+                                {quantity[cartItems] || 1}x
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                @ ${priceNumber.toFixed(2)} $
+                                {totalPrice.toFixed(2)}
+                              </Typography>
+                            </Stack>
+                          </Stack>
+                          <IconButton
+                            sx={{ color: 'black' }}
+                            onClick={() => removeFromCart(cartItems)}
+                          >
+                            <HighlightOffIcon />
+                          </IconButton>
+                        </Stack>
+                      </React.Fragment>
+                    )
+                  })}
+                </AnimatePresence>
                 <Stack
                   direction="row"
                   sx={{

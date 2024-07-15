@@ -3,6 +3,7 @@ import './App.css'
 import { Stack } from '@mui/material'
 import Dessert from './Components/Dessert'
 import Cart from './Components/Cart'
+import { AnimatePresence } from 'framer-motion'
 
 function App() {
   return (
