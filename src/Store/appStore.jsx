@@ -1,10 +1,11 @@
 import { create } from 'zustand'
-import ProductList from '../Components/ProductList'
 
 const appStore = create((set) => ({
   cartItem: 0,
   quantity: {},
   added: {},
+
+  
   increase: (id) =>
     set((state) => ({
       quantity: {

@@ -10,7 +10,7 @@ function Dessert() {
         Dessert
       </Typography>
 
-      <Grid container columns={{ xs: 4, sm: 12, lg: 10 }}>
+      <Grid container columns={{ xs: 5, sm: 12, lg: 10 }}>
         {ProductList.map((product) => {
           return (
             <Grid item xs={3} sm={4} lg={3} key={product.id}>
@@ -21,9 +21,10 @@ function Dessert() {
                     src={product.img}
                     alt={product.description}
                     sx={{
-                      width: { xs: '330px', sm: '220px', lg: '250px' },
-                      height: { xs: '330px', sm: '220px', lg: '250px' },
+                      width: { xs: '230px', sm: '220px', lg: '250px' },
+                      height: { xs: '230px', sm: '220px', lg: '250px' },
                       borderRadius: '20px',
+                      
                     }}
                   />
                 </React.Fragment>

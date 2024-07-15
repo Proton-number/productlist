@@ -22,8 +22,7 @@ function Cart() {
     cart,
     removeFromCart,
     openDialog,
-    closeDialog,
-  } = appStore()
+  } = appStore();
 
   const totalOrder = cart.reduce((total, cartItemId) => {
     const product = ProductList.find((product) => product.id === cartItemId)
@@ -65,9 +64,9 @@ function Cart() {
                   height: '200px',
                 }}
               >
-                <>
+                <React.Fragment>
                   <Box component="img" src={emptyCart} alt="empty cart" />
-                </>
+                </React.Fragment>
                 <Typography
                   variant="body1"
                   sx={{ color: 'hsl(10, 24%, 45%)', fontWeight: 'bold' }}
@@ -154,9 +153,9 @@ function Cart() {
                     alignItems: 'center',
                   }}
                 >
-                  <>
+                  <React.Fragment>
                     <Box component="img" src={logo} />
-                  </>
+                  </React.Fragment>
                   <Typography>
                     This is a <b>carbon-neutral</b> delivery
                   </Typography>
